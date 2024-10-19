@@ -18,7 +18,11 @@ A movie database app built with React, Tailwind CSS, and Vite.
 
 ## Screenshots
 
-![MovieWhore Screenshot](https://user-images.githubusercontent.com/10276027/155849493-7c9b2a7b-5c54-4a4d-8a24-3c70b2c54c5c.png)
+## Screenshots
+
+![Screenshot 1](screenshots/screenshot1.png)
+![Screenshot 2](screenshots/screenshot2.png)
+![Screenshot 3](screenshots/screenshot3.png)
 
 ## Tech Stack
 
