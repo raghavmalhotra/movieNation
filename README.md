@@ -18,8 +18,6 @@ A movie database app built with React, Tailwind CSS, and Vite.
 
 ## Screenshots
 
-## Screenshots
-
 ![Screenshot 1](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/2.png)
 ![Screenshot 2](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/3.png)
 ![Screenshot 3](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/4.png)
