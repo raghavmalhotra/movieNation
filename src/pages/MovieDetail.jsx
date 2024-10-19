@@ -90,21 +90,25 @@ export const MovieDetail = () => {
             </span>
           </p>
 
-          <p className='my-3'>
-            <span className='text-gray-900 dark:text-white mr-2 font-bold'>
-              {' '}
-              Budget:
-            </span>
-            <span> ${MovieDetail?.budget?.toLocaleString()}</span>
-          </p>
+          {MovieDetail?.budget > 0 && (
+            <p className='my-3'>
+              <span className='text-gray-900 dark:text-white mr-2 font-bold'>
+                {' '}
+                Budget:
+              </span>
+              <span> ${MovieDetail?.budget?.toLocaleString()}</span>
+            </p>
+          )}
 
-          <p className='my-3'>
-            <span className='text-gray-900 dark:text-white mr-2 font-bold'>
-              {' '}
-              Revenue:
-            </span>
-            <span> ${MovieDetail?.revenue?.toLocaleString()}</span>
-          </p>
+          {MovieDetail?.revenue > 0 && (
+            <p className='my-3'>
+              <span className='text-gray-900 dark:text-white mr-2 font-bold'>
+                {' '}
+                Revenue:
+              </span>
+              <span> ${MovieDetail?.revenue?.toLocaleString()}</span>
+            </p>
+          )}
 
           <p className='my-3'>
             <span className='text-gray-900 dark:text-white mr-2 font-bold'>
