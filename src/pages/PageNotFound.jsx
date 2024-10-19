@@ -3,8 +3,8 @@ import PageNotFoundImg from '../assets/404.png'
 import { Link } from 'react-router-dom'
 export const PageNotFound = () => {
   useEffect(() => {
-    document.title = MovieDetail?.title
-  }, [MovieDetail])
+    document.title = 'Page Not Found'
+  })
   return (
     <section>
       <main className='min-h-screen bg-gray-50 dark:bg-gray-700 dark:text-white flex flex-col  top-1/2'>

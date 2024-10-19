@@ -1,6 +1,7 @@
 import logo from '../assets/logo.png'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -9,6 +10,12 @@ export const Header = () => {
   )
 
   const Navigate = useNavigate()
+
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    showMenu && setShowMenu(false)
+  }, [pathname])
 
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode))
@@ -28,6 +35,7 @@ export const Header = () => {
     e.preventDefault()
     const queyTerm = e.target.search.value
     e.target.reset()
+    showMenu && setShowMenu(false)
     return Navigate(`/search?q=${queyTerm}`)
   }
   return (

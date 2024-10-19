@@ -10,7 +10,14 @@ export const Footer = () => {
           <Link to='/' className='hover:underline'>
             MovieNation™
           </Link>
-          . I hope this is enough of a project for you to hire me.
+          . React JS application written by{' '}
+          <a
+            className='hover:underline '
+            href='https://github.com/raghavmalhotra'
+            target='_blank'
+          >
+            Raghav Malhotra
+          </a>
         </span>
         <ul className='flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0'>
           <li>
