@@ -19,7 +19,8 @@ A movie database app built with React, Tailwind CSS, and Vite.
 
 ## Try the final build Yourself
 
-The site is currently live at netlify  [https://movienation56.netlify.app/](https://movienation56.netlify.app/)
+The site is currently live at netlify 
+[https://movienation56.netlify.app/](https://movienation56.netlify.app/)
 
 ## Screenshots
 
