@@ -23,7 +23,7 @@ The site is currently live at [https://movienation56.netlify.app/](https://movie
 ### Light Mode
 ![Screenshot 1](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/2.png)
 
-### Light Mode
+### Dark Mode
 ![Screenshot 2](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/3.png)
 
 ### Mobile view
