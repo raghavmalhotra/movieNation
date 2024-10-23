@@ -1,4 +1,4 @@
-# MovieNation
+# [MovieNation](https://movienation56.netlify.app/)
 
 A movie database app built with React, Tailwind CSS, and Vite.
 
@@ -16,15 +16,24 @@ A movie database app built with React, Tailwind CSS, and Vite.
 3. Run `npm run dev` to start the development server
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-The site is currently live at [https://movienation56.netlify.app/](https://movienation56.netlify.app/)
+
+## Try the final build Yourself
+
+The site is currently live at netlify 
+[https://movienation56.netlify.app/](https://movienation56.netlify.app/)
 
 ## Screenshots
 
+### Light Mode
 ![Screenshot 1](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/2.png)
+
+### Dark Mode
 ![Screenshot 2](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/3.png)
+
+### Mobile view
 ![Screenshot 3](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/4.png)
 ![Screenshot 4](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/5.png)
-![Screenshot 5](https://raw.githubusercontent.com/raghavmalhotra/movieNation/refs/heads/main/screenshots/6.png)
+
 
 ## Tech Stack
 
