@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem('darkMode')) || false
+    JSON.parse(localStorage.getItem('darkMode')) || true
   )
 
   const Navigate = useNavigate()
