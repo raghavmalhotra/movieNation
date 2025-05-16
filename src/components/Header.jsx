@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom'
 export const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const [darkMode, setDarkMode] = useState(
-    JSON.parse(localStorage.getItem('darkMode')) || false
+    JSON.parse(localStorage.getItem('darkMode')) || true
   )
 
   const Navigate = useNavigate()
@@ -55,7 +55,7 @@ export const Header = () => {
           <div className='flex md:order-2'>
             <button
               type='button'
-              className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 mr-1 '
+              className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 mr-1 transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95'
               onClick={() => setDarkMode(!darkMode)}
             >
               <svg
@@ -95,7 +95,7 @@ export const Header = () => {
               data-collapse-toggle='navbar-search'
               aria-controls='navbar-search'
               aria-expanded='false'
-              className='md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1'
+              className='md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1 transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95'
             >
               <svg
                 className='w-5 h-5'
@@ -149,7 +149,7 @@ export const Header = () => {
               data-collapse-toggle='navbar-search'
               onClick={() => setShowMenu(!showMenu)}
               type='button'
-              className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600'
+              className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95'
               aria-controls='navbar-search'
               aria-expanded='false'
             >
