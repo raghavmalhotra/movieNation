@@ -13,7 +13,7 @@ export const MovieList = ({ apiPath, title }) => {
     <main className='min-h-screen'>
       {movies && movies.length > 0 && <MovieCarousel movies={movies} />}
       {title === 'Top Rated' && (
-        <section className='max-w-3xl mx-auto py-7 px-4 text-center'>
+        <section className='max-w-3xl mx-auto py-7 px-4'>
           <p className='text-lg text-gray-700 dark:text-gray-300 leading-relaxed'>
             Explore a curated collection of the most critically acclaimed and
             beloved films of all time. These top-rated movies have captivated
