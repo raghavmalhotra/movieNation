@@ -53,7 +53,7 @@ export const MovieCarousel = ({ movies }) => {
           nextEl: '.swiper-button-next-custom',
           prevEl: '.swiper-button-prev-custom',
         }}
-        className='movie-carousel-landscape pb-12'
+        className='movie-carousel-landscape pb-6 sm:pb-12'
         breakpoints={{
           320: {
             slidesPerView: 1.2,
@@ -137,7 +137,7 @@ export const MovieCarousel = ({ movies }) => {
           </svg>
         </div>
       </Swiper>
-      <div className='swiper-pagination-custom text-center pt-4'></div>
+      <div className='swiper-pagination-custom text-center pt-4 hidden sm:block'></div>
     </div>
   )
 }
