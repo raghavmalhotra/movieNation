@@ -1,6 +1,6 @@
 import logo from '../assets/logo.svg'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
 export const Header = () => {
@@ -8,6 +8,11 @@ export const Header = () => {
   const [darkMode, setDarkMode] = useState(
     JSON.parse(localStorage.getItem('darkMode')) || true
   )
+
+  // States for header visibility control
+  const [headerVisible, setHeaderVisible] = useState(true)
+  const lastScrollY = useRef(0) // Using useRef to avoid re-renders on lastScrollY change
+  const scrollThreshold = 100 // Only hide header after scrolling this much
 
   const Navigate = useNavigate()
 
@@ -26,6 +31,29 @@ export const Header = () => {
     }
   }, [darkMode])
 
+  // Effect for controlling header visibility on scroll
+  useEffect(() => {
+    const controlHeader = () => {
+      const currentScrollY = window.scrollY
+      if (
+        currentScrollY > lastScrollY.current &&
+        currentScrollY > scrollThreshold
+      ) {
+        // Scrolling Down and past threshold
+        setHeaderVisible(false)
+      } else {
+        // Scrolling Up or within threshold
+        setHeaderVisible(true)
+      }
+      lastScrollY.current = currentScrollY // Update last scroll position
+    }
+
+    window.addEventListener('scroll', controlHeader)
+    return () => {
+      window.removeEventListener('scroll', controlHeader)
+    }
+  }, []) // Empty dependency array means this effect runs once on mount and cleanup on unmount
+
   const activeClass =
     'block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500'
   const inActiveClass =
@@ -39,7 +67,17 @@ export const Header = () => {
     return Navigate(`/search?q=${queyTerm}`)
   }
   return (
-    <header className='sticky top-0  z-50 w-full'>
+    <header
+      className={`
+        sticky top-0 z-50 w-full
+        transition-transform duration-300 ease-in-out
+        ${
+          headerVisible
+            ? 'transform translate-y-0'
+            : 'transform -translate-y-full'
+        }
+      `}
+    >
       <nav className='bg-white border-gray-400 px-2 sm:px-4 py-2.5  dark:bg-gray-900 border-b-1'>
         <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
           <Link
@@ -58,35 +96,45 @@ export const Header = () => {
               className='inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 mr-1 transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95'
               onClick={() => setDarkMode(!darkMode)}
             >
-              <svg
-                className='w-5 h-5'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                {darkMode ? (
-                  <circle
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='0'
-                    cx='10'
-                    cy='10'
-                    r='10'
-                    fill='#FF9626'
-                  />
-                ) : (
+              {darkMode ? (
+                // Moon Icon (Dark mode is ON, shows icon to switch to Light mode)
+                <svg
+                  className='w-5 h-5'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
                   <path
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth='2'
                     d='M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z'
-                  >
-                    {' '}
-                  </path>
-                )}
-              </svg>
+                  ></path>
+                </svg>
+              ) : (
+                // Sun Icon (Dark mode is OFF, shows icon to switch to Dark mode)
+                <svg
+                  className='w-5 h-5'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M12 3v1m0 16v1m8.66-15.66l-.707.707M4.04 19.96l-.707.707M21 12h-1M4 12H3m15.66 8.66l-.707-.707M4.707 4.707l-.707-.707'
+                  ></path>
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth='2'
+                    d='M12 5.5A6.5 6.5 0 1012 18.5 6.5 6.5 0 0012 5.5z'
+                  ></path>
+                </svg>
+              )}
               <span className='sr-only'>Toggle dark mode</span>
             </button>
             <button
