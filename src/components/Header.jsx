@@ -78,8 +78,8 @@ export const Header = () => {
         }
       `}
     >
-      <nav className='bg-white border-gray-400 px-2 sm:px-4 py-2.5  dark:bg-gray-900 border-b-1'>
-        <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
+      <nav className='bg-white border-gray-400 px-2 sm:px-4 py-2 dark:bg-gray-900 border-b-1'>
+        <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-2 px-4'>
           <Link
             to='/'
             className='flex items-center space-x-3 rtl:space-x-reverse'

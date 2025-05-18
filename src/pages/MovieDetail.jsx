@@ -12,6 +12,12 @@ export const MovieDetail = () => {
   const [recommendedMovies, setRecommendedMovies] = useState([])
   const [loadingRecommendedMovies, setLoadingRecommendedMovies] =
     useState(false)
+  const [cast, setCast] = useState([])
+  const [loadingCast, setLoadingCast] = useState(false)
+  const [isCastExpanded, setIsCastExpanded] = useState(false)
+
+  const INITIAL_CAST_DISPLAY_LIMIT = 3
+  const EXPANDED_CAST_DISPLAY_LIMIT = 10
 
   const img = movieDetail?.poster_path
     ? `https://image.tmdb.org/t/p/original/${movieDetail?.poster_path}`
@@ -25,6 +31,8 @@ export const MovieDetail = () => {
       setLoadingSimilarMovies(true)
       setRecommendedMovies([])
       setLoadingRecommendedMovies(true)
+      setCast([])
+      setLoadingCast(true)
 
       try {
         const response = await fetch(
@@ -95,6 +103,31 @@ export const MovieDetail = () => {
     }
 
     fetchRecommendedMovies()
+  }, [id])
+
+  useEffect(() => {
+    if (!id) return
+
+    const fetchCast = async () => {
+      setLoadingCast(true)
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${
+            import.meta.env.VITE_API_KEY
+          }`
+        )
+        if (!response.ok) throw new Error('Failed to fetch cast information')
+        const json = await response.json()
+        setCast(json.cast || [])
+      } catch (error) {
+        console.error('Error fetching cast information:', error)
+        setCast([])
+      } finally {
+        setLoadingCast(false)
+      }
+    }
+
+    fetchCast()
   }, [id])
 
   useEffect(() => {
@@ -227,6 +260,48 @@ export const MovieDetail = () => {
               <span> {movieDetail.tagline}</span>
             </p>
           )}
+
+          {/* Cast Information Section */}
+          {!loadingCast && cast.length > 0 && (
+            <div className='my-3'>
+              <p className='text-gray-900 dark:text-white mr-2 font-bold mb-1'>
+                Starring:
+              </p>
+              <div>
+                <div className='flex flex-wrap gap-x-2 gap-y-1'>
+                  {(isCastExpanded
+                    ? cast.slice(0, EXPANDED_CAST_DISPLAY_LIMIT)
+                    : cast.slice(0, INITIAL_CAST_DISPLAY_LIMIT)
+                  ).map((member, index, arr) => (
+                    <span key={member.cast_id || member.id || index}>
+                      {member.name}
+                      {index < arr.length - 1 && ', '}
+                    </span>
+                  ))}
+                  {isCastExpanded &&
+                    cast.length > EXPANDED_CAST_DISPLAY_LIMIT && (
+                      <span>
+                        ...and {cast.length - EXPANDED_CAST_DISPLAY_LIMIT} more
+                      </span>
+                    )}
+                </div>
+                {cast.length > INITIAL_CAST_DISPLAY_LIMIT && (
+                  <button
+                    onClick={() => setIsCastExpanded(!isCastExpanded)}
+                    className='text-blue-600 dark:text-blue-400 hover:underline text-sm mt-1 focus:outline-none'
+                  >
+                    {isCastExpanded ? 'Read Less' : 'Read More'}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+          {loadingCast && (
+            <p className='my-3 text-sm text-gray-500 dark:text-gray-400'>
+              Loading cast...
+            </p>
+          )}
+          {/* End Cast Information Section */}
 
           <p className='my-3'>
             <span className='text-gray-900 dark:text-white mr-2 font-bold'>
