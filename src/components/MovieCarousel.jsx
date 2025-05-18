@@ -26,7 +26,7 @@ export const MovieCarousel = ({ movies }) => {
   const landscapeBackupImg = backupImg
 
   return (
-    <div className='pt-8 pb-8 mx-auto max-w-full group/carousel'>
+    <div className='pt-8 pb-4 sm:pb-8 mx-auto max-w-full group/carousel'>
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
         effect={'coverflow'}
