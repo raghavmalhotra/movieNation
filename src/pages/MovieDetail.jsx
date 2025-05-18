@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import backupImg from '../assets/images/backupImg.jpg'
+import { Card } from '../components'
 
 export const MovieDetail = () => {
   const { id } = useParams()
   const [movieDetail, setMovieDetail] = useState(null)
   const [animatePoster, setAnimatePoster] = useState(false)
+  const [similarMovies, setSimilarMovies] = useState([])
+  const [loadingSimilarMovies, setLoadingSimilarMovies] = useState(false)
 
   const img = movieDetail?.poster_path
     ? `https://image.tmdb.org/t/p/original/${movieDetail?.poster_path}`
@@ -13,22 +16,55 @@ export const MovieDetail = () => {
 
   useEffect(() => {
     const fetchMovie = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${
-          import.meta.env.VITE_API_KEY
-        }`
-      )
-      const json = await response.json()
-      setMovieDetail(json)
-      if (json?.poster_path) {
-        setAnimatePoster(true)
-      } else {
-        setAnimatePoster(true)
+      setAnimatePoster(false)
+      setMovieDetail(null)
+      setSimilarMovies([])
+      setLoadingSimilarMovies(true)
+
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${
+            import.meta.env.VITE_API_KEY
+          }`
+        )
+        if (!response.ok) throw new Error('Failed to fetch movie details')
+        const json = await response.json()
+        setMovieDetail(json)
+        if (json?.poster_path) {
+          setAnimatePoster(true)
+        } else {
+          setAnimatePoster(true)
+        }
+      } catch (error) {
+        console.error('Error fetching movie details:', error)
       }
     }
-    setAnimatePoster(false)
-    setMovieDetail(null)
     fetchMovie()
+  }, [id])
+
+  useEffect(() => {
+    if (!id) return
+
+    const fetchSimilarMovies = async () => {
+      setLoadingSimilarMovies(true)
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${
+            import.meta.env.VITE_API_KEY
+          }`
+        )
+        if (!response.ok) throw new Error('Failed to fetch similar movies')
+        const json = await response.json()
+        setSimilarMovies(json.results || [])
+      } catch (error) {
+        console.error('Error fetching similar movies:', error)
+        setSimilarMovies([])
+      } finally {
+        setLoadingSimilarMovies(false)
+      }
+    }
+
+    fetchSimilarMovies()
   }, [id])
 
   useEffect(() => {
@@ -50,7 +86,7 @@ export const MovieDetail = () => {
   }
 
   return (
-    <main>
+    <main className='pb-10'>
       <section className='flex justify-around flex-wrap py-5 px-4'>
         <div className='max-w-md lg:max-w-sm xl:max-w-md w-full'>
           <img
@@ -183,6 +219,33 @@ export const MovieDetail = () => {
           </p>
         </div>
       </section>
+
+      {movieDetail && (
+        <section className='my-12 px-4'>
+          <h2 className='text-3xl font-bold mb-8 text-center dark:text-white'>
+            Similar Movies
+          </h2>
+          {loadingSimilarMovies && (
+            <div className='flex justify-center'>
+              <p className='text-xl text-gray-700 dark:text-gray-200'>
+                Loading similar movies...
+              </p>
+            </div>
+          )}
+          {!loadingSimilarMovies && similarMovies.length > 0 && (
+            <div className='flex flex-wrap justify-center gap-4 md:gap-6'>
+              {similarMovies.slice(0, 6).map((movie) => (
+                <Card key={movie.id} movie={movie} size='small' />
+              ))}
+            </div>
+          )}
+          {!loadingSimilarMovies && similarMovies.length === 0 && (
+            <p className='text-xl text-center text-gray-700 dark:text-gray-200'>
+              No similar movies found.
+            </p>
+          )}
+        </section>
+      )}
     </main>
   )
 }

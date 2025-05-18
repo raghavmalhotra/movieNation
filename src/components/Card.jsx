@@ -2,67 +2,76 @@ import { Link } from 'react-router-dom'
 import { useState, useRef, useEffect } from 'react'
 import backupImg from '../assets/images/backupImg.jpg'
 
-export const Card = ({ movie }) => {
+export const Card = ({ movie, size = 'normal' }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [showReadMoreButton, setShowReadMoreButton] = useState(false)
   const overviewRef = useRef(null)
 
+  const imageWidth = size === 'small' ? 'w200' : 'w500'
   const img = movie.poster_path
-    ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+    ? `https://image.tmdb.org/t/p/${imageWidth}/${movie.poster_path}`
     : backupImg
 
   useEffect(() => {
-    if (overviewRef.current) {
-      // Temporarily remove line-clamp to measure full scrollHeight
+    if (size === 'normal' && overviewRef.current) {
       overviewRef.current.classList.remove('line-clamp-3')
       const hasOverflow =
         overviewRef.current.scrollHeight > overviewRef.current.clientHeight
-      // Re-apply line-clamp if not expanded
       if (!isExpanded) {
         overviewRef.current.classList.add('line-clamp-3')
       }
       setShowReadMoreButton(hasOverflow)
+    } else {
+      setShowReadMoreButton(false)
     }
-  }, [movie.overview, isExpanded]) // Rerun when overview text changes or expansion state changes
+  }, [movie.overview, isExpanded, size])
 
   const toggleReadMore = (e) => {
-    e.stopPropagation() // Prevent Link navigation
+    e.stopPropagation()
     setIsExpanded(!isExpanded)
   }
 
+  const cardClasses =
+    size === 'small'
+      ? 'w-40 bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-md flex flex-col justify-between h-full'
+      : 'max-w-sm bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-2xl flex flex-col justify-between h-full'
+
+  const titleClasses =
+    size === 'small'
+      ? 'mb-1 text-sm font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500 line-clamp-2'
+      : 'mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500'
+
+  const paddingClasses = size === 'small' ? 'p-2' : 'p-5'
+
   return (
-    <Link to={`/movie/${movie.id}`} className='block m-3 group'>
-      {' '}
-      {/* Make entire card a Link and a group for potential group-hover states */}
-      <div className='max-w-sm bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-2xl flex flex-col justify-between h-full'>
+    <Link
+      to={`/movie/${movie.id}`}
+      className={`block group ${size === 'small' ? 'm-1' : 'm-3'}`}
+    >
+      <div className={cardClasses}>
         <div>
-          {' '}
-          {/* Top section for image and text */}
-          {/* Ensure image is contained and responsive, removed fixed height */}
           <img
-            className='rounded-t-lg w-full object-contain'
+            className='rounded-t-lg w-full object-cover'
             src={img}
             alt={movie.title}
           />
-          <div className='p-5'>
-            <h5 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500'>
-              {movie.title}
-            </h5>
-            <p
-              ref={overviewRef}
-              className={`mb-3 font-normal text-gray-700 dark:text-gray-400 overflow-hidden ${
-                isExpanded ? '' : 'line-clamp-3'
-              }`}
-            >
-              {movie.overview}
-            </p>
+          <div className={paddingClasses}>
+            <h5 className={titleClasses}>{movie.title}</h5>
+            {size === 'normal' && (
+              <p
+                ref={overviewRef}
+                className={`mb-3 font-normal text-gray-700 dark:text-gray-400 overflow-hidden ${
+                  isExpanded ? '' : 'line-clamp-3'
+                }`}
+              >
+                {movie.overview}
+              </p>
+            )}
           </div>
         </div>
 
-        {showReadMoreButton && (
-          <div className='p-5 pt-0 mt-auto'>
-            {' '}
-            {/* Ensures button is at the bottom if text is short */}
+        {size === 'normal' && showReadMoreButton && (
+          <div className={`mt-auto ${paddingClasses} pt-0`}>
             <button
               onClick={toggleReadMore}
               className='inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 z-10 relative'
