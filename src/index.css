@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: 'Inter', sans-serif; /* Ensure Inter is explicitly set on body */
+    @apply text-gray-900 dark:text-gray-100; /* Base text colors */
+    @apply leading-relaxed; /* A slightly more spacious line-height */
+  }
+}
+
 :root {
   touch-action: pan-x pan-y;
   height: 100%;

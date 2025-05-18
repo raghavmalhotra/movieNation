@@ -9,6 +9,9 @@ export const MovieDetail = () => {
   const [animatePoster, setAnimatePoster] = useState(false)
   const [similarMovies, setSimilarMovies] = useState([])
   const [loadingSimilarMovies, setLoadingSimilarMovies] = useState(false)
+  const [recommendedMovies, setRecommendedMovies] = useState([])
+  const [loadingRecommendedMovies, setLoadingRecommendedMovies] =
+    useState(false)
 
   const img = movieDetail?.poster_path
     ? `https://image.tmdb.org/t/p/original/${movieDetail?.poster_path}`
@@ -20,6 +23,8 @@ export const MovieDetail = () => {
       setMovieDetail(null)
       setSimilarMovies([])
       setLoadingSimilarMovies(true)
+      setRecommendedMovies([])
+      setLoadingRecommendedMovies(true)
 
       try {
         const response = await fetch(
@@ -65,6 +70,31 @@ export const MovieDetail = () => {
     }
 
     fetchSimilarMovies()
+  }, [id])
+
+  useEffect(() => {
+    if (!id) return
+
+    const fetchRecommendedMovies = async () => {
+      setLoadingRecommendedMovies(true)
+      try {
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${
+            import.meta.env.VITE_API_KEY
+          }`
+        )
+        if (!response.ok) throw new Error('Failed to fetch recommended movies')
+        const json = await response.json()
+        setRecommendedMovies(json.results || [])
+      } catch (error) {
+        console.error('Error fetching recommended movies:', error)
+        setRecommendedMovies([])
+      } finally {
+        setLoadingRecommendedMovies(false)
+      }
+    }
+
+    fetchRecommendedMovies()
   }, [id])
 
   useEffect(() => {
@@ -246,6 +276,39 @@ export const MovieDetail = () => {
           )}
         </section>
       )}
+
+      {/* Recommended Movies Section */}
+      {movieDetail && recommendedMovies.length > 0 && (
+        <section className='my-12 px-4'>
+          <h2 className='text-3xl font-bold mb-8 text-center dark:text-white'>
+            Recommended For You
+          </h2>
+          {loadingRecommendedMovies && (
+            <div className='flex justify-center'>
+              <p className='text-xl text-gray-700 dark:text-gray-200'>
+                Loading recommendations...
+              </p>
+            </div>
+          )}
+          {!loadingRecommendedMovies && (
+            <div className='flex flex-wrap justify-center gap-4 md:gap-6'>
+              {recommendedMovies.slice(0, 6).map((movie) => (
+                <Card key={movie.id} movie={movie} size='small' />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+      {/* Show message if no recommendations and not loading */}
+      {movieDetail &&
+        !loadingRecommendedMovies &&
+        recommendedMovies.length === 0 && (
+          <section className='my-12 px-4'>
+            <p className='text-xl text-center text-gray-700 dark:text-gray-200'>
+              No recommendations found for this movie yet.
+            </p>
+          </section>
+        )}
     </main>
   )
 }

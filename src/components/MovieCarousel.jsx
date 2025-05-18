@@ -21,8 +21,6 @@ export const MovieCarousel = ({ movies }) => {
     return null // Don't render anything if there are no movies
   }
 
-  // Create a landscape backup image or use a generic one if you don't have specific landscape backups.
-  // For now, I'll reuse the existing backupImg, but ideally, it should be landscape-oriented.
   const landscapeBackupImg = backupImg
 
   return (
