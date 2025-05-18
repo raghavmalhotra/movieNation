@@ -38,8 +38,8 @@ export const Card = ({ movie, size = 'normal' }) => {
 
   const titleClasses =
     size === 'small'
-      ? 'mb-1 text-sm font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500 line-clamp-2'
-      : 'mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500'
+      ? 'mb-1 text-sm font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500 line-clamp-2 text-center'
+      : 'mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-500 text-center'
 
   const paddingClasses = size === 'small' ? 'p-2' : 'p-5'
 

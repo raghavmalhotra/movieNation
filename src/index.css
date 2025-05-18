@@ -6,3 +6,48 @@
   touch-action: pan-x pan-y;
   height: 100%;
 }
+
+/* Hide default Swiper navigation arrows since we use custom ones */
+.movie-carousel-landscape .swiper-button-next,
+.movie-carousel-landscape .swiper-button-prev {
+  display: none !important;
+}
+
+/* Custom Swiper Pagination Bullet Styles */
+/* Ensure pagination container is relative for absolute positioning of bullets if needed, or use flex for centering */
+.swiper-pagination-custom {
+  position: relative; /* Or use flex, justify-center, etc. */
+  /* Add bottom or top margin here if needed to space from Swiper container */
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet {
+  background-color: #9ca3af !important; /* Tailwind gray-400 for inactive bullets */
+  opacity: 1 !important; /* Make them fully opaque */
+  width: 10px !important; /* Slightly larger bullets */
+  height: 10px !important;
+  margin: 0 5px !important; /* Adjust spacing between bullets */
+  transition: background-color 0.3s ease;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active {
+  background-color: #3b82f6 !important; /* Tailwind blue-500 for active bullet */
+}
+
+/* Ensure carousel takes full width if needed by parent */
+.movie-carousel-landscape .swiper {
+  width: 100%;
+}
+
+/* Style for individual landscape slides if needed for consistent height/aspect ratio */
+.carousel-slide-landscape {
+  /* You can add specific aspect ratio helpers here if fixed heights aren't perfect */
+  /* For example, to enforce a 16:9 aspect ratio for the slide itself */
+  /* aspect-ratio: 16 / 9; */
+}
+
+.carousel-slide-landscape img {
+  /* Ensure images within the slide cover the area if using aspect ratio on slide */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* object-fit: cover; */
+}
